@@ -157,6 +157,20 @@ window.Embedify = (function(window, document, $, undefined)
         }
     );
 
+    // Vine
+    // http://blog.vine.co/post/55514921892/embed-vine-posts
+
+    Embedify.site( 
+        'vine', 
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:vine\.co)\/v\/([\w]+).*/gi,
+            html: '<div class="embedify-responsive-container" style="padding-bottom: 100%;">' +
+                    '\t<iframe class="vine-embed" src="https://vine.co/v/$1/embed/simple?related=0" width="100%" frameborder="0"></iframe>' +
+                    '\t<script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>' +
+                    '</div>\n'
+        }
+    );
+
     // Youtube
     // https://developers.google.com/youtube/player_parameters
 
