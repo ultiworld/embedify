@@ -73,7 +73,7 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site( 
         'gfycat', 
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:gfycat\.com\/(?:\w+\/)*)(\w+).*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:gfycat\.com\/(?:\w+\/)*)(\w+).*/gi,
             html: '<a href="http://gfycat.com/$1" target="_blank">\n' +
                     '<video width="100%" autoplay loop poster="http://thumbs.gfycat.com/$1-poster.jpg" style="margin:auto;">\n' +
                     '\t<source src="http://zippy.gfycat.com/$1.webm" type="video/webm">\n' +
@@ -93,7 +93,7 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site( 
         'instagram', 
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:instagr\.am|instagram\.com)\/p\/([\w-]+)\/.*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:instagr\.am|instagram\.com)\/p\/([\w-]+)\/.*/gi,
             html: '<div style="max-width: 612px; max-height: 710px; margin: auto;">' +
                     '\t<div class="embedify-responsive-container" style="padding-bottom: 100%; height: 114px;">\n' +
                     '\t<iframe src="//instagram.com/p/$1/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>\n' +
@@ -123,7 +123,7 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site( 
         'storify', 
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:storify\.com\/)(\w*)\/([\w-]+).*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:storify\.com\/)(\w*)\/([\w-]+).*/gi,
             html: '<div class="storify">' +
                     '\t<iframe src="//storify.com/$1/$2/embed?header=false&border=false" width="100%" height=750 frameborder=no allowtransparency=true></iframe>\n' +
                     '\t<script src="//storify.com/$1/$2.js?header=false&border=false"></script>\n' +
@@ -137,7 +137,7 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site( 
         'twitter-tweet', 
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:twitter\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:twitter\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
             html: '<blockquote class="twitter-tweet" align="center" lang="en">' +
                     '\t<a href="https://twitter.com/$1/$2/$3">https://twitter.com/$1/$2/$3</a>\n' +
                     '</blockquote>\n'
@@ -150,7 +150,7 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site( 
         'vimeo', 
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:(?:player\.)?vimeo\.com\/(?:\w*\/)*)(\d+).*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:(?:player\.)?vimeo\.com\/(?:\w*\/)*)(\d+).*/gi,
             html: '<div class="embedify-responsive-container">' +
                     '\t<iframe src="//player.vimeo.com/video/$1" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
                     '</div>\n'
@@ -167,7 +167,7 @@ window.Embedify = (function(window, document, $, undefined)
             html: '<div class="embedify-responsive-container">' +
                     '\t<iframe src="//www.youtube.com/embed/$1?start=$2" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
                     '</div>\n',
-process: function( html ) {
+            process: function( html ) {
                 var regexTime = /(?:start=((?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?))/gi;
                 var parsedTime = regexTime.exec( html );
                 console.log(parsedTime);
