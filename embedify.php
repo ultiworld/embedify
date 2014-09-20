@@ -23,7 +23,7 @@ function embedify_enqueue_styles() {
 add_action( 'wp_head', 'embedify_enqueue_styles', 5 );
 
 function embedify_enqueue_scripts() {
-	wp_enqueue_script( 'embedify-script', plugin_dir_url( __FILE__ ) . 'embedify.js', null, null, false );
+	wp_enqueue_script( 'embedify-script', plugin_dir_url( __FILE__ ) . 'embedify.js', array( 'jquery' ), null, false );
 }
 add_action( 'wp_enqueue_scripts', 'embedify_enqueue_scripts' );
 
