@@ -184,7 +184,6 @@ window.Embedify = (function(window, document, $, undefined)
             process: function( html ) {
                 var regexTime = /(?:start=((?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?))/gi;
                 var parsedTime = regexTime.exec( html );
-                console.log(parsedTime);
                 var seconds = 0;
                 if( typeof parsedTime[2] !== 'undefined' )
                     seconds += 3600 * parseInt( parsedTime[2] );
@@ -194,7 +193,6 @@ window.Embedify = (function(window, document, $, undefined)
                     seconds += parseInt( parsedTime[4] );
 
                 html = html.replace( regexTime, "start="+seconds );
-                console.log( html );
 
                 return html;
             }
