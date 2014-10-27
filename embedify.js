@@ -1,5 +1,5 @@
 /*!
- * Embedify v0.1
+ * Embedify v1.05
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -12,6 +12,9 @@ window.Embedify = (function(window, document, $, undefined)
         load: function( selector )
         {
             $( selector ).each( function() {
+                if( $( this ).text() !== $( this ).parent().text() )
+                    return;
+
                 var url = $( this ).attr( 'href' );
 
                 var match = Embedify.match( url );
