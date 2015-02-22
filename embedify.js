@@ -1,5 +1,5 @@
 /*!
- * Embedify v1.06
+ * Embedify v1.07
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -77,16 +77,16 @@ window.Embedify = (function(window, document, $, undefined)
         'gfycat', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:gfycat\.com\/(?:\w+\/)*)(\w+).*/gi,
-            html: '<a href="http://gfycat.com/$1" target="_blank">\n' +
-                    '<video width="100%" autoplay loop controls poster="http://thumbs.gfycat.com/$1-poster.jpg" style="margin:auto;">\n' +
-                    '\t<source src="http://zippy.gfycat.com/$1.webm" type="video/webm">\n' +
-                    '\t<source src="http://fat.gfycat.com/$1.webm" type="video/webm">\n' +
-                    '\t<source src="http://giant.gfycat.com/$1.webm" type="video/webm">\n' +
-                    '\t<source src="http://fat.gfycat.com/$1.mp4" type="video/mp4">\n' +
-                    '\t<source src="http://giant.gfycat.com/$1.mp4" type="video/mp4">\n' +
-                    '\t<source src="http://zippy.gfycat.com/$1.mp4" type="video/mp4">\n' +
-                    '</video>\n' +
-                    '</a>\n'
+            html: '<div class="embedify-embed embedify-responsive-container js-hover-to-play">\n' +
+                    '\t<video width="100%" loop poster="http://thumbs.gfycat.com/$1-poster.jpg" style="margin:auto;">\n' +
+                    '\t\t<source src="http://zippy.gfycat.com/$1.webm" type="video/webm">\n' +
+                    '\t\t<source src="http://fat.gfycat.com/$1.webm" type="video/webm">\n' +
+                    '\t\t<source src="http://giant.gfycat.com/$1.webm" type="video/webm">\n' +
+                    '\t\t<source src="http://fat.gfycat.com/$1.mp4" type="video/mp4">\n' +
+                    '\t\t<source src="http://giant.gfycat.com/$1.mp4" type="video/mp4">\n' +
+                    '\t\t<source src="http://zippy.gfycat.com/$1.mp4" type="video/mp4">\n' +
+                    '\t</video>\n' +
+                    '</div>\n'
         }
     );
 
@@ -97,7 +97,7 @@ window.Embedify = (function(window, document, $, undefined)
         'instagram', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:instagr\.am|instagram\.com)\/p\/([\w-]+)\/.*/gi,
-            html: '<div style="max-width: 612px; max-height: 710px; margin: auto;">' +
+            html: '<div class="embedify-embed" style="max-width: 612px; max-height: 710px; margin: auto;">' +
                     '\t<div class="embedify-responsive-container" style="padding-bottom: 100%; height: 114px;">\n' +
                     '\t<iframe src="//instagram.com/p/$1/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>\n' +
                     '\t</div>\n' +
@@ -112,7 +112,7 @@ window.Embedify = (function(window, document, $, undefined)
         'scribd', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:scribd\.com)\/(\w+)\/([\d-]+)\/.*/gi,
-            html: '<div style="max-height: 600px; margin: auto;">' +
+            html: '<div class="embedify-embed" style="max-height: 600px; margin: auto;">' +
                     '\t<div class="embedify-responsive-container" style="padding-bottom: 77.29%;">\n' +
                     '\t<iframe src="//www.scribd.com/embeds/$2/content" frameborder="0" scrolling="no"></iframe>\n' +
                     '\t</div>\n' +
@@ -127,7 +127,7 @@ window.Embedify = (function(window, document, $, undefined)
         'storify', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:storify\.com\/)(\w*)\/([\w-]+).*/gi,
-            html: '<div class="storify">' +
+            html: '<div class="embedify-embed storify">' +
                     '\t<iframe src="//storify.com/$1/$2/embed?header=false&border=false" width="100%" height=750 frameborder=no allowtransparency=true></iframe>\n' +
                     '\t<script src="//storify.com/$1/$2.js?header=false&border=false"></script>\n' +
                     '</div>\n'
@@ -141,7 +141,7 @@ window.Embedify = (function(window, document, $, undefined)
         'twitter-tweet', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:twitter\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
-            html: '<blockquote class="twitter-tweet" align="center" lang="en">' +
+            html: '<blockquote class="embedify-embed twitter-tweet" align="center" lang="en">' +
                     '\t<a href="https://twitter.com/$1/$2/$3">https://twitter.com/$1/$2/$3</a>\n' +
                     '</blockquote>\n'
         }
@@ -154,7 +154,7 @@ window.Embedify = (function(window, document, $, undefined)
         'vimeo', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:(?:player\.)?vimeo\.com\/(?:\w*\/)*)(\d+).*/gi,
-            html: '<div class="embedify-responsive-container">' +
+            html: '<div class="embedify-embed embedify-responsive-container">' +
                     '\t<iframe src="//player.vimeo.com/video/$1" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
                     '</div>\n'
         }
@@ -167,7 +167,7 @@ window.Embedify = (function(window, document, $, undefined)
         'vine', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:vine\.co)\/v\/([\w]+).*/gi,
-            html: '<div class="embedify-responsive-container" style="padding-bottom: 100%;">' +
+            html: '<div class="embedify-embed embedify-responsive-container" style="padding-bottom: 100%;">' +
                     '\t<iframe class="vine-embed" src="https://vine.co/v/$1/embed/simple?related=0" width="100%" frameborder="0"></iframe>' +
                     '\t<script async src="//platform.vine.co/static/scripts/embed.js" charset="utf-8"></script>' +
                     '</div>\n'
@@ -181,7 +181,7 @@ window.Embedify = (function(window, document, $, undefined)
         'youtube', 
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})(?:[?&](?:t=((\d+h)?(\d+m)?(\d+s)?))|[?&][\w;:@#%=+\/\$_.-]*)*.*/gi,
-            html: '<div class="embedify-responsive-container">' +
+            html: '<div class="embedify-embed embedify-responsive-container">' +
                     '\t<iframe src="//www.youtube.com/embed/$1?start=$2" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
                     '</div>\n',
             process: function( html ) {
@@ -204,4 +204,3 @@ window.Embedify = (function(window, document, $, undefined)
     
     
 })(window, window.document, window.Embedify);
-
