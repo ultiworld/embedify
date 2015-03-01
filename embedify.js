@@ -1,5 +1,5 @@
 /**
- * Embedify v1.10
+ * Embedify v1.20
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -9,15 +9,17 @@ window.Embedify = (function(window, document, $, undefined)
 
         sites: { },
 
-        load: function( selector )
+        load: function( selector, strict )
         {
+            strict = typeof strict === 'undefined' ? false : Boolean( strict );
+
             $( selector ).each( function() {
                 if( $( this ).text() !== $( this ).parent().text() )
                     return;
 
                 var url = $( this ).attr( 'href' );
 
-                var match = Embedify.match( url );
+                var match = Embedify.match( url, strict );
 
                 if( match !== '' ) {
                     Embedify.embed( url, match, $( this ).parent() );
@@ -25,9 +27,12 @@ window.Embedify = (function(window, document, $, undefined)
             } );
         },
 
-        match: function( url ) {
+        match: function( url, strict ) {
             var match = '';
             $.each( Embedify.sites, function( name, site ) {
+                if( strict && site['isFallback'] ) {
+                    return;
+                }
                 if( site['regex'].test( url ) ) {
                     match = name;
                 }
@@ -45,16 +50,26 @@ window.Embedify = (function(window, document, $, undefined)
 
         site: function( name, params )
         {
+            if( !( name ) ||
+                    !( params['regex'] instanceof RegExp ) ||
+                    !( params['html'] ) ) {
+                return false;
+            }
+
             Embedify.sites[name] = {
                 'name': name,
                 regex: params['regex'],
                 html: params['html'],
                 process: function( html ) {
                     return html;
-                }
+                },
+                isFallback: false
             };
-            if( typeof params['process'] == 'function' ) {
+            if( typeof params['process'] === 'function' ) {
                 Embedify.sites[name]['process'] = params['process'];
+            }
+            if( params['isFallback'] ) {
+                Embedify.sites[name]['isFallback'] = true;
             }
         },
 
@@ -117,6 +132,59 @@ window.Embedify = (function(window, document, $, undefined)
     return Embedify;
 
 })(window, window.document, jQuery);
+
+
+/**
+ * Embedify Fallbacks
+ *
+ * Sites (including fallbacks) must be added in order
+ * from least specific to most specific, so that more
+ * specific regex can always take precedence.
+ */
+(function(window, document, Embedify, undefined)
+{
+    // IFrame
+
+    Embedify.site(
+        'iframe',
+        {
+            regex: /(^.*$)/i,
+            html: '<div class="embedify-embed embedify-responsive-container">' +
+                    '\t<iframe src="$1" frameborder="0" onload="Embedify.scaleToFit( this );" width="640" height="360" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
+                    '</div>\n',
+            isFallback: true
+        }
+    );
+
+    // Video
+
+    Embedify.site(
+        'video',
+        {
+            regex: /(.*\.(?:mp4|ogv|webm)$)/i,
+            html: '<div class="embedify-embed embedify-responsive-container">\n' +
+                    '\t<video width="100%" src="$1" style="margin:auto;" controls></video>\n' +
+                    '</div>\n',
+            isFallback: true
+        }
+    );
+
+    // Image
+
+    Embedify.site(
+        'image',
+        {
+            regex: /(.*\.(?:gif|jpeg|jpg|png)$)/i,
+            html: '<div class="embedify-embed">\n' +
+                    '\t<img src="$1"/>\n' +
+                    '</div>\n',
+            isFallback: true
+        }
+    );
+
+
+})(window, window.document, window.Embedify);
+
 
 /**
  * Embedify Extensions - Pick 'n' Mix!
