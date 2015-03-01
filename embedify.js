@@ -1,5 +1,5 @@
-/*!
- * Embedify v1.07
+/**
+ * Embedify v1.10
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -18,7 +18,7 @@ window.Embedify = (function(window, document, $, undefined)
                 var url = $( this ).attr( 'href' );
 
                 var match = Embedify.match( url );
-                
+
                 if( match !== '' ) {
                     Embedify.embed( url, match, $( this ).parent() );
                 }
@@ -56,6 +56,61 @@ window.Embedify = (function(window, document, $, undefined)
             if( typeof params['process'] == 'function' ) {
                 Embedify.sites[name]['process'] = params['process'];
             }
+        },
+
+        scaleToFit: function( element ) {
+            /**
+             * Based off the algorithm on
+             * http://codepen.io/herschel666/blog/scaling-iframes-css-transforms
+             */
+            var maxWidth = element.width,
+                maxHeight = element.height,
+                currentStyle = getComputedStyle( element ),
+                currentWidth = parseInt( currentStyle.width, 10 ),
+                currentHeight = parseInt( currentStyle.height, 10 ),
+                scale,
+                width,
+                height,
+                offsetLeft;
+
+            if ( currentWidth >= maxWidth || currentHeight >= maxHeight ) {
+                return false;
+            }
+
+            /**
+             * The required scaling using `Math.pow` to get
+             * a safely small enough value.
+             */
+            scale = Math.min( Math.pow( currentWidth / maxWidth, 1 ),
+                            Math.pow( currentHeight / maxHeight, 1 ) );
+
+            /**
+             * To get the corresponding width percentage that
+             * compensates keeps the width of the shrinking iframe
+             * consistent, we have to divide 100 by the scale.
+             */
+            width = 100 / scale;
+            height = currentHeight / scale;
+
+            /**
+             * Correct the position of the iframe when
+             * changing its width.
+             */
+            offsetLeft = (width - 100) / 2;
+
+            /**
+             * Setting the styles.
+             */
+            element.setAttribute('style',
+                    'height: ' + height + 'px; ' +
+                    'max-height: none; ' +
+                    'max-width: none; ' +
+                    'transform: scale(' + scale + ') ' + 'translate3d(-' + offsetLeft + '%,0,0); ' +
+                    'transform-origin: center top; ' +
+                    'width: ' + width + '%;'
+                    );
+
+            return true;
         }
     };
 
@@ -73,8 +128,8 @@ window.Embedify = (function(window, document, $, undefined)
     // http://www.gfycat.com/about
     // http://www.gfycat.com/api
 
-    Embedify.site( 
-        'gfycat', 
+    Embedify.site(
+        'gfycat',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:gfycat\.com\/(?:\w+\/)*)(\w+).*/gi,
             html: '<div class="embedify-embed embedify-responsive-container js-hover-to-play">\n' +
@@ -93,8 +148,8 @@ window.Embedify = (function(window, document, $, undefined)
     // Instagram
     // http://instagram.com/developer/
 
-    Embedify.site( 
-        'instagram', 
+    Embedify.site(
+        'instagram',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:instagr\.am|instagram\.com)\/p\/([\w-]+)\/.*/gi,
             html: '<div class="embedify-embed" style="max-width: 612px; max-height: 710px; margin: auto;">' +
@@ -105,11 +160,26 @@ window.Embedify = (function(window, document, $, undefined)
         }
     );
 
+    // Playspedia
+    // http://www.playspedia.com/
+
+    Embedify.site(
+        'playspedia',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:playspedia\.com\/(?:\w*\/)*id\/)(\d+).*/gi,
+            html: '<div class="embedify-embed" style="max-width: 560px; max-height: 700px; margin: auto;">' +
+                    '\t<div class="embedify-responsive-container" style="padding-bottom: 125%">' +
+                    '\t\t<iframe src="http://www.playspedia.com/play/embed/id/$1" width="560" height="700" frameborder="0" onload="Embedify.scaleToFit( this );" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
+                    '\t</div>\n' +
+                    '</div>\n'
+        }
+    );
+
     // Scribd
     // http://www.scribd.com/developers
 
-    Embedify.site( 
-        'scribd', 
+    Embedify.site(
+        'scribd',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:scribd\.com)\/(\w+)\/([\d-]+)\/.*/gi,
             html: '<div class="embedify-embed" style="max-height: 600px; margin: auto;">' +
@@ -123,8 +193,8 @@ window.Embedify = (function(window, document, $, undefined)
     // Storify
     // http://dev.storify.com/api/
 
-    Embedify.site( 
-        'storify', 
+    Embedify.site(
+        'storify',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:storify\.com\/)(\w*)\/([\w-]+).*/gi,
             html: '<div class="embedify-embed storify">' +
@@ -137,8 +207,8 @@ window.Embedify = (function(window, document, $, undefined)
     // Twitter Tweet
     // https://dev.twitter.com/docs/embedded-tweets
 
-    Embedify.site( 
-        'twitter-tweet', 
+    Embedify.site(
+        'twitter-tweet',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:twitter\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
             html: '<blockquote class="embedify-embed twitter-tweet" align="center" lang="en">' +
@@ -150,8 +220,8 @@ window.Embedify = (function(window, document, $, undefined)
     // Vimeo
     // http://developer.vimeo.com/player/embedding
 
-    Embedify.site( 
-        'vimeo', 
+    Embedify.site(
+        'vimeo',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:(?:player\.)?vimeo\.com\/(?:\w*\/)*)(\d+).*/gi,
             html: '<div class="embedify-embed embedify-responsive-container">' +
@@ -163,8 +233,8 @@ window.Embedify = (function(window, document, $, undefined)
     // Vine
     // http://blog.vine.co/post/55514921892/embed-vine-posts
 
-    Embedify.site( 
-        'vine', 
+    Embedify.site(
+        'vine',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:vine\.co)\/v\/([\w]+).*/gi,
             html: '<div class="embedify-embed embedify-responsive-container" style="padding-bottom: 100%;">' +
@@ -177,8 +247,8 @@ window.Embedify = (function(window, document, $, undefined)
     // Youtube
     // https://developers.google.com/youtube/player_parameters
 
-    Embedify.site( 
-        'youtube', 
+    Embedify.site(
+        'youtube',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})(?:[?&](?:t=((\d+h)?(\d+m)?(\d+s)?))|[?&][\w;:@#%=+\/\$_.-]*)*.*/gi,
             html: '<div class="embedify-embed embedify-responsive-container">' +
@@ -201,6 +271,6 @@ window.Embedify = (function(window, document, $, undefined)
             }
         }
     );
-    
-    
+
+
 })(window, window.document, window.Embedify);
