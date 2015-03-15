@@ -1,5 +1,5 @@
 /**
- * Embedify v1.21
+ * Embedify v1.22
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -17,7 +17,7 @@ window.Embedify = (function(window, document, $, undefined)
                 if( $( this ).text() !== $( this ).parent().text() )
                     return;
 
-                var url = $( this ).attr( 'href' );
+                var url = decodeURIComponent( $( this ).attr( 'href' ) );
 
                 var match = Embedify.match( url, strict );
 
@@ -318,22 +318,35 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site(
         'youtube',
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})(?:[?&](?:t=((\d+h)?(\d+m)?(\d+s)?))|[?&][\w;:@#%=+\/\$_.-]*)*.*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www.|)(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})(?:[?&](?!t=|start=|end=)(?:\w+=)[\w;:@#%\+\/\$\.\-]*)*(?:[?&]t=((?:\d+h)?(?:\d+m)?(?:\d+s)?(?:\d+)?))?(?:[?&]start=(\d+))?(?:[?&]end=(\d+))?.*/gi,
             html: '<div class="embedify-embed embedify-responsive-container">' +
-                    '\t<iframe src="//www.youtube.com/embed/$1?start=$2" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
+                    '\t<iframe src="//www.youtube.com/embed/$1?t=$2&start=$3&end=$4" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
                     '</div>\n',
             process: function( html ) {
-                var regexTime = /(?:start=((?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?))/gi;
+                var regexTime = /\?t=((?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?(?:(\d+))?)&start=(\d+)?&end=(\d+)?/gi;
                 var parsedTime = regexTime.exec( html );
-                var seconds = 0;
-                if( typeof parsedTime[2] !== 'undefined' )
-                    seconds += 3600 * parseInt( parsedTime[2] );
-                if( typeof parsedTime[3] !== 'undefined' )
-                    seconds += 60 * parseInt( parsedTime[3] );
-                if( typeof parsedTime[4] !== 'undefined' )
-                    seconds += parseInt( parsedTime[4] );
+                var startSeconds = 0;
+                var endSeconds = '';
+                if( typeof parsedTime !== 'undefined' ) {
+                    if( typeof parsedTime[2] !== 'undefined' )
+                        startSeconds += 3600 * parseInt( parsedTime[2] );
+                    if( typeof parsedTime[3] !== 'undefined' )
+                        startSeconds += 60 * parseInt( parsedTime[3] );
+                    if( typeof parsedTime[4] !== 'undefined' )
+                        startSeconds += parseInt( parsedTime[4] );
+                    if( typeof parsedTime[5] !== 'undefined' )
+                        startSeconds += parseInt( parsedTime[5] );
+                    if( typeof parsedTime[6] !== 'undefined' )
+                        startSeconds = parseInt( parsedTime[6] );
+                    if( typeof parsedTime[7] !== 'undefined' )
+                        endSeconds = parseInt( parsedTime[7] );
+                }
 
-                html = html.replace( regexTime, "start="+seconds );
+                if( startSeconds > 0 || endSeconds !== '' ){
+                    html = html.replace( regexTime, "?rel=0&start="+startSeconds+"&end="+endSeconds );
+                } else {
+                    html = html.replace( regexTime, "" );
+                }
 
                 return html;
             }
