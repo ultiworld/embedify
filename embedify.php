@@ -27,7 +27,7 @@ function embedify_enqueue_scripts() {
 		'embedify-script',
 		plugin_dir_url( __FILE__ ) . 'embedify.js',
 		array( 'jquery' ),
-		'1.22',
+		'1.31',
 		false
 	);
 	wp_enqueue_script( 'embedify-script' );

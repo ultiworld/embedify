@@ -1,5 +1,5 @@
 /**
- * Embedify v1.22
+ * Embedify v1.31
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -213,17 +213,33 @@ window.Embedify = (function(window, document, $, undefined)
         }
     );
 
+    // Imgur
+    // https://help.imgur.com/hc/en-us/articles/204766005-Image-Album-Embed
+    // https://api.imgur.com/
+
+    Embedify.site(
+        'imgur',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:\w+.|)(?:imgur\.com\/(?:\w+\/)*)(\w+).*/gi,
+            html: '<div class="embedify-embed">\n' +
+                    '\t<blockquote class="imgur-embed-pub" lang="en" data-id="$1">\n' +
+                    '\t\t<a href="//imgur.com/$1">https://imgur.com/$1</a>\n' +
+                    '\t</blockquote>\n' +
+                    '\t<script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>\n' +
+                    '</div>\n'
+        }
+    );
+
     // Instagram
-    // http://instagram.com/developer/
+    // https://www.instagram.com/developer/embedding/
 
     Embedify.site(
         'instagram',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:instagr\.am|instagram\.com)\/p\/([\w-]+)\/.*/gi,
-            html: '<div class="embedify-embed" style="max-width: 612px; max-height: 710px; margin: auto;">' +
-                    '\t<div class="embedify-responsive-container" style="padding-bottom: 100%; height: 114px;">\n' +
-                    '\t<iframe src="//instagram.com/p/$1/embed/" frameborder="0" scrolling="no" allowtransparency="true"></iframe>\n' +
-                    '\t</div>\n' +
+            html: '<div class="embedify-embed">' +
+                    '\t<blockquote class="instagram-media" data-instgrm-version="6" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:8px;"> <div style=" background:#F8F8F8; line-height:0; margin-top:40px; padding:50.0% 0; text-align:center; width:100%;"> <div style=" background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAGFBMVEUiIiI9PT0eHh4gIB4hIBkcHBwcHBwcHBydr+JQAAAACHRSTlMABA4YHyQsM5jtaMwAAADfSURBVDjL7ZVBEgMhCAQBAf//42xcNbpAqakcM0ftUmFAAIBE81IqBJdS3lS6zs3bIpB9WED3YYXFPmHRfT8sgyrCP1x8uEUxLMzNWElFOYCV6mHWWwMzdPEKHlhLw7NWJqkHc4uIZphavDzA2JPzUDsBZziNae2S6owH8xPmX8G7zzgKEOPUoYHvGz1TBCxMkd3kwNVbU0gKHkx+iZILf77IofhrY1nYFnB/lQPb79drWOyJVa/DAvg9B/rLB4cC+Nqgdz/TvBbBnr6GBReqn/nRmDgaQEej7WhonozjF+Y2I/fZou/qAAAAAElFTkSuQmCC); display:block; height:44px; margin:0 auto -44px; position:relative; top:-22px; width:44px;"></div></div><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/$1/" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">https://www.instagram.com/p/$1</a></p></div></blockquote>\n' +
+                    '\t<script async defer src="//platform.instagram.com/en_US/embeds.js"></script>\n' +
                     '</div>\n'
         }
     );
