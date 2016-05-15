@@ -1,5 +1,5 @@
 /**
- * Embedify v1.31
+ * Embedify v1.40
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -270,6 +270,19 @@ window.Embedify = (function(window, document, $, undefined)
                     '\t<div class="embedify-responsive-container" style="padding-bottom: 77.29%;">\n' +
                     '\t<iframe src="//www.scribd.com/embeds/$2/content" frameborder="0" scrolling="no"></iframe>\n' +
                     '\t</div>\n' +
+                    '</div>\n'
+        }
+    );
+
+    // Spreaker
+    // https://developers.spreaker.com/
+
+    Embedify.site(
+        'spreaker',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:\w+.|)(?:spreaker\.com\/(?:\w+\/)*)(?:.*episode_id=|)(\d+).*/gi,
+            html: '<div class="embedify-embed spreaker">' +
+                    '\t<iframe src="https://www.spreaker.com/embed/player/standard?episode_id=$1&autoplay=false" style="width: 100%; height: 131px;" frameborder="0" scrolling="no"></iframe>\n' +
                     '</div>\n'
         }
     );
