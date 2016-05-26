@@ -1,5 +1,5 @@
 /**
- * Embedify v1.40
+ * Embedify v1.50
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -177,6 +177,21 @@ window.Embedify = (function(window, document, $, undefined)
             regex: /(.*\.(?:gif|jpeg|jpg|png)$)/i,
             html: '<div class="embedify-embed">\n' +
                     '\t<img src="$1"/>\n' +
+                    '</div>\n',
+            isFallback: true
+        }
+    );
+
+    // PDF
+
+    Embedify.site(
+        'pdf',
+        {
+            regex: /(.*\.(?:pdf)$)/i,
+            html: '<div class="embedify-embed" style="max-width: 600px; margin: auto;">' +
+                    '\t<div class="embedify-responsive-container" style="padding-bottom: 129.41%;">\n' +
+                    '\t<iframe src="//docs.google.com/viewer?embedded=true&url=$1" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
+                    '\t</div>\n' +
                     '</div>\n',
             isFallback: true
         }
