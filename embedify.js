@@ -1,5 +1,5 @@
 /**
- * Embedify v1.51
+ * Embedify v1.6
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -206,6 +206,21 @@ window.Embedify = (function(window, document, $, undefined)
  */
 (function(window, document, Embedify, undefined)
 {
+
+    // Facebook Page Plugin
+    // https://developers.facebook.com/docs/plugins/page-plugin/
+
+    Embedify.site(
+        'facebook-page',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:facebook\.com\/plugins\/page.php\?)(.*)$/gi,
+            html: '<div class="embedify-embed" style="max-height: 600px; margin: auto;">' +
+                    '\t<div class="embedify-responsive-container" style="padding-bottom: 200%;">\n' +
+                    '\t<iframe src="https://www.facebook.com/plugins/page.php?$1" frameborder="0" scrolling="no"></iframe>\n' +
+                    '\t</div>\n' +
+                    '</div>\n'
+        }
+    );
 
     // Gfycat
     // http://www.gfycat.com/about
