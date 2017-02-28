@@ -1,5 +1,5 @@
 /**
- * Embedify v1.71
+ * Embedify v1.72
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -312,7 +312,7 @@ window.Embedify = (function(window, document, $, undefined)
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:\w+.|)(?:spreaker\.com\/.*)(episode_id=\d+|show_id=\d+|user_id=\d+|episode\/\d+|show\/\d+|user\/\d+).*/gi,
             html: '<div class="embedify-embed spreaker">' +
-                    '\t<iframe src="https://www.spreaker.com/embed/player/standard?$1&autoplay=false" style="width: 100%; height: 131px;" frameborder="0" scrolling="no"></iframe>\n' +
+                    '\t<iframe src="https://widget.spreaker.com/player?$1&autoplay=false&playlist=false&theme=dark" style="width: 100%; height: 131px;" frameborder="0" scrolling="no"></iframe>\n' +
                     '</div>\n',
             process: function( html ) {
                 var regexId = /episode\/|show\/|user\//gi;
