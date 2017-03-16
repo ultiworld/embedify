@@ -1,5 +1,5 @@
 /**
- * Embedify v1.73
+ * Embedify v1.74
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -231,7 +231,7 @@ window.Embedify = (function(window, document, $, undefined)
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:gfycat\.com\/(?:\w+\/)*)(\w+).*/gi,
             html: '<div class="embedify-embed embedify-responsive-container js-hover-to-play">\n' +
-                    '\t<video muted loop width="100%" poster="https://thumbs.gfycat.com/$1-poster.jpg" style="margin:auto;">\n' +
+                    '\t<video loop muted playsinline width="100%" poster="https://thumbs.gfycat.com/$1-poster.jpg" style="margin:auto;">\n' +
                     '\t\t<source src="https://zippy.gfycat.com/$1.webm" type="video/webm">\n' +
                     '\t\t<source src="https://fat.gfycat.com/$1.webm" type="video/webm">\n' +
                     '\t\t<source src="https://giant.gfycat.com/$1.webm" type="video/webm">\n' +
