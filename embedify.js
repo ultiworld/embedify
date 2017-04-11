@@ -1,5 +1,5 @@
 /**
- * Embedify v1.74
+ * Embedify v1.80
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -339,6 +339,20 @@ window.Embedify = (function(window, document, $, undefined)
                     '\t<iframe src="https://storify.com/$1/$2/embed?header=false&border=false" width="100%" height=750 frameborder=no allowtransparency=true></iframe>\n' +
                     '\t<script src="https://storify.com/$1/$2.js?header=false&border=false"></script>\n' +
                     '</div>\n'
+        }
+    );
+
+    // Streamable
+    // https://streamable.com/documentation
+
+    Embedify.site(
+        'streamable',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:streamable\.com\/(?:\w+\/)?)(\w+).*/gi,
+            html: '<div class="embedify-embed embedify-responsive-container">' +
+                    '\t<iframe src="https://streamable.com/e/$1" frameborder="0" onload="Embedify.scaleToFit( this );" width="640" height="360" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
+                    '</div>\n',
+            isFallback: true
         }
     );
 
