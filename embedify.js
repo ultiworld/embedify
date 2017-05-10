@@ -1,5 +1,5 @@
 /**
- * Embedify v1.80
+ * Embedify v1.90
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -164,6 +164,19 @@ window.Embedify = (function(window, document, $, undefined)
             regex: /(.*\.(?:mp4|ogv|webm)$)/i,
             html: '<div class="embedify-embed embedify-responsive-container">\n' +
                     '\t<video width="100%" src="$1" style="margin:auto;" controls></video>\n' +
+                    '</div>\n',
+            isFallback: true
+        }
+    );
+
+    // Audio
+
+    Embedify.site(
+        'audio',
+        {
+            regex: /(.*\.(?:flac|m4a|mp3|oga|ogg|wav|weba)$)/i,
+            html: '<div class="embedify-embed">\n' +
+                    '\t<audio src="$1" style="margin:auto;width:100%;" preload="none" controls></audio>\n' +
                     '</div>\n',
             isFallback: true
         }
