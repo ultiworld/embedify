@@ -1,5 +1,5 @@
 /**
- * Embedify v1.90
+ * Embedify v1.100
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -235,6 +235,19 @@ window.Embedify = (function(window, document, $, undefined)
         }
     );
 
+    // Giphy
+    // https://support.giphy.com/hc/en-us/articles/360020330711-How-to-Embed-a-GIF
+
+    Embedify.site(
+        'giphy',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:giphy\.com\/(?:embed|gifs)\/)(\w+).*/gi,
+            html: '<div class="embedify-embed embedify-responsive-container">' +
+                    '\t<iframe src="https://giphy.com/embed/$1" frameborder="0" onload="Embedify.scaleToFit( this );" width="640" height="360" allowFullScreen></iframe>\n' +
+                    '</div>\n'
+        }
+    );
+
     // Gfycat
     // https://www.gfycat.com/about
     // https://www.gfycat.com/api
@@ -366,6 +379,19 @@ window.Embedify = (function(window, document, $, undefined)
                     '\t<iframe src="https://streamable.com/e/$1" frameborder="0" onload="Embedify.scaleToFit( this );" width="640" height="360" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>\n' +
                     '</div>\n',
             isFallback: true
+        }
+    );
+
+    // Tenor
+    // https://developers.google.com/tenor/guides/quickstart
+
+    Embedify.site(
+        'tenor',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:tenor\.com\/(?:view\/[\w-]+-|embed\/))(\d+).*/gi,
+            html: '<div class="embedify-embed embedify-responsive-container">' +
+                    '\t<iframe src="https://tenor.com/embed/$1" frameborder="0" onload="Embedify.scaleToFit( this );" width="640" height="360" allowFullScreen></iframe>\n' +
+                    '</div>\n'
         }
     );
 
