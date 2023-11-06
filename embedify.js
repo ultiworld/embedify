@@ -1,5 +1,5 @@
 /**
- * Embedify v1.100
+ * Embedify v1.110
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -231,6 +231,20 @@ window.Embedify = (function(window, document, $, undefined)
                     '\t<div class="embedify-responsive-container" style="padding-bottom: 200%;">\n' +
                     '\t<iframe src="https://www.facebook.com/plugins/page.php?$1" frameborder="0" scrolling="no"></iframe>\n' +
                     '\t</div>\n' +
+                    '</div>\n'
+        }
+    );
+
+    // Flourish
+    // https://help.flourish.studio/article/145-how-to-embed-flourish-charts-in-your-cms
+
+    Embedify.site(
+        'flourish',
+        {
+            regex: /(?:http:|https:|)(?:\/\/|)(?:public\.|)(?:flourish(?:\.studio|\.com)\/(?:visualisation)\/)(\d+).*/gi,
+            html: '<div class="embedify-embed">' +
+                    '\t<div class="flourish-embed flourish-chart" data-src="visualisation/$1">\n' +
+                    '\t<script async defer src="https://public.flourish.studio/resources/embed.js"></script>\n' +
                     '</div>\n'
         }
     );
