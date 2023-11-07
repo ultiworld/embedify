@@ -1,5 +1,5 @@
 /**
- * Embedify v1.110
+ * Embedify v1.111
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -237,14 +237,14 @@ window.Embedify = (function(window, document, $, undefined)
 
     // Flourish
     // https://help.flourish.studio/article/145-how-to-embed-flourish-charts-in-your-cms
+    // https://developers.flourish.studio/embedding/oembed-integration/
 
     Embedify.site(
         'flourish',
         {
             regex: /(?:http:|https:|)(?:\/\/|)(?:public\.|)(?:flourish(?:\.studio|\.com)\/(?:visualisation)\/)(\d+).*/gi,
-            html: '<div class="embedify-embed">' +
-                    '\t<div class="flourish-embed flourish-chart" data-src="visualisation/$1">\n' +
-                    '\t<script async defer src="https://public.flourish.studio/resources/embed.js"></script>\n' +
+            html: '<div id="flourish-$1" class="embedify-embed">' +
+                    '\t<script>jQuery.get( "https://app.flourish.studio/api/v1/oembed?url=https%3A%2F%2Fpublic.flourish.studio%2Fvisualisation%2F$1%2F&maxwidth=" + jQuery( "#flourish-$1" )[0].offsetWidth, function ( data ) { jQuery( "#flourish-$1" ).append( data.html ); } );</script>\n' +
                     '</div>\n'
         }
     );
