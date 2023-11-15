@@ -1,5 +1,5 @@
 /**
- * Embedify v1.111
+ * Embedify v1.112
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -242,9 +242,10 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site(
         'flourish',
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:public\.|)(?:flourish(?:\.studio|\.com)\/(?:visualisation)\/)(\d+).*/gi,
-            html: '<div id="flourish-$1" class="embedify-embed">' +
-                    '\t<script>jQuery.get( "https://app.flourish.studio/api/v1/oembed?url=https%3A%2F%2Fpublic.flourish.studio%2Fvisualisation%2F$1%2F&maxwidth=" + jQuery( "#flourish-$1" )[0].offsetWidth, function ( data ) { jQuery( "#flourish-$1" ).append( data.html ); } );</script>\n' +
+            regex: /(?:http:|https:|)(?:\/\/|)(?:public\.|app\.|)(?:(?:flourish(?:\.studio|\.com)|flo\.uri\.sh)\/(?:visualisation)\/)(\d+).*/gi,
+            html: '<div class="embedify-embed">' +
+                    '\t<div id="flourish-$1" class="flourish-embed flourish-chart" data-src="visualisation/$1"></div>\n' +
+                    '\t<script>if( typeof window.Flourish === "undefined" ) { window.Flourish = {}; jQuery.ajax( { url: "https://public.flourish.studio/resources/embed.js", dataType: "script", cache: true } ); } else if( window.FlourishLoaded ) { window.Flourish.loadEmbed( document.getElementById( "flourish-$1" ) ); }</script>\n' +
                     '</div>\n'
         }
     );
