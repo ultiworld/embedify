@@ -3,7 +3,7 @@
  * Plugin Name: Embedify
  * Plugin URI: http://ultiworld.com
  * Description: Asynchronously load embeddable media
- * Version: 1.113
+ * Version: 1.114
  * Author: Orion Burt
  * Author URI: http://orionburt.com
 **/
@@ -27,7 +27,7 @@ function embedify_enqueue_scripts() {
 		'embedify-script',
 		plugin_dir_url( __FILE__ ) . 'embedify.js',
 		array( 'jquery' ),
-		'1.113',
+		'1.114',
 		false
 	);
 	wp_enqueue_script( 'embedify-script' );
@@ -43,7 +43,7 @@ function embedify_deactivate() {
 }
 
 function embedify_uninstall() {
-	
+
 }
 
 register_activation_hook( __FILE__, 'embedify_activate' );

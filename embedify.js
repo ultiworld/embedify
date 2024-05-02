@@ -1,5 +1,5 @@
 /**
- * Embedify v1.113
+ * Embedify v1.114
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -416,7 +416,7 @@ window.Embedify = (function(window, document, $, undefined)
     Embedify.site(
         'twitter-tweet',
         {
-            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:twitter\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
+            regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:twitter\.com|x\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
             html: '<blockquote class="embedify-embed twitter-tweet" align="center" lang="en" data-conversation="none">' +
                     '\t<a href="https://twitter.com/$1/$2/$3">https://twitter.com/$1/$2/$3</a>\n' +
                     '</blockquote>\n'
