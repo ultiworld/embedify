@@ -1,5 +1,5 @@
 /**
- * Embedify v1.114
+ * Embedify v1.120
  */
 window.Embedify = (function(window, document, $, undefined)
 {
@@ -419,6 +419,7 @@ window.Embedify = (function(window, document, $, undefined)
             regex: /(?:http:|https:|)(?:\/\/|)(?:www\.|)(?:twitter\.com|x\.com)\/([\w_]+)\/([\w_]+)\/(\d+).*/gi,
             html: '<blockquote class="embedify-embed twitter-tweet" align="center" lang="en" data-conversation="none">' +
                     '\t<a href="https://twitter.com/$1/$2/$3">https://twitter.com/$1/$2/$3</a>\n' +
+                    '\t<script>if( typeof window.twttr === "undefined" ) { window.twttr = {}; jQuery.ajax( { url: "https://platform.twitter.com/widgets.js", dataType: "script", cache: true } ); }</script>\n' +
                     '</blockquote>\n'
         }
     );
